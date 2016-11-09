@@ -95,6 +95,22 @@ public class CritterController {
 	 * @return none
 	 */
 	public static void initUI(){
+		// -1.0: Set seed UI
+		
+		// -1.1: Set title
+		Text setSeedTitle = new Text("Please Set Seed");
+		setSeedTitle.setFill(Color.DARKBLUE);
+		setSeedTitle.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 14));	
+		Main.controllerGrid.add(setSeedTitle, 1, 0);
+		
+		// -1.2: Add prompt
+		Label setSeedMessage = new Label("Enter new seed #:");
+		setSeedMessage.setTextFill(Color.BLACK);
+		setSeedMessage.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
+		setSeedMessage.setPrefHeight(30);
+		Main.controllerGrid.add(setSeedMessage, 1, 1);
+		
+		
 		// 0.0 : Set UI attributes
 		
 		Main.controllerGrid.setAlignment(Pos.CENTER);
@@ -113,7 +129,7 @@ public class CritterController {
 		Text makeCritterTitle = new Text("Make Critter");
 		makeCritterTitle.setFill(Color.DARKBLUE);
 		makeCritterTitle.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 14));	
-		Main.controllerGrid.add(makeCritterTitle, 1, 1);
+		Main.controllerGrid.add(makeCritterTitle, 1, 2);
 		
 		
 		// 1.2: Add the label
@@ -122,7 +138,7 @@ public class CritterController {
 		critterResponse.setTextFill(Color.ORANGERED);
 		critterResponse.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 14));
 		critterResponse.setPrefWidth(230);
-		Main.controllerGrid.add(critterResponse, 2, 1);
+		Main.controllerGrid.add(critterResponse, 2, 2);
 		
 		
 		// 1.3: Add the number field
@@ -131,11 +147,11 @@ public class CritterController {
 		Label critterNumberMessage = new Label("Enter # of critters below:");
 		critterNumberMessage.setTextFill(Color.BLACK);
 		critterNumberMessage.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
-		Main.controllerGrid.add(critterNumberMessage, 2, 2);
+		Main.controllerGrid.add(critterNumberMessage, 2, 3);
 		
 		// 1.3.2: Add the number field
 		TextField critterNumber = new TextField("");
-		Main.controllerGrid.add(critterNumber, 2, 3);
+		Main.controllerGrid.add(critterNumber, 2, 4);
 		
 		
 		// 1.4: Add the creation button
@@ -145,7 +161,7 @@ public class CritterController {
 		critterMakeButton.setText("Make Critters!");
 		critterMakeButton.setTextFill(Color.RED);
 		critterMakeButton.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
-		Main.controllerGrid.add(critterMakeButton, 2, 4);
+		Main.controllerGrid.add(critterMakeButton, 2, 5);
 		
 		// 1.4.2: Add button handler
 		
@@ -173,7 +189,7 @@ public class CritterController {
 		ObservableList<String> presentCritters = FXCollections.observableArrayList(Main.critterNames);
 		ListView<String> critterNames = new ListView<String>(presentCritters);
 		critterNames.setPrefSize(140, 100);
-		Main.controllerGrid.add(critterNames, 1, 2, 1, 3);								
+		Main.controllerGrid.add(critterNames, 1, 3, 1, 3);								
 		
 		// 1.5.2: Add controllers for the list, mark which critter is being selected for creation
 		MultipleSelectionModel<String> critterSelModel = critterNames.getSelectionModel();
@@ -193,7 +209,7 @@ public class CritterController {
 		Text timeStepTitle = new Text("Do Time Steps:");
 		timeStepTitle.setFill(Color.DARKBLUE);
 		timeStepTitle.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 14));	
-		Main.controllerGrid.add(timeStepTitle, 1, 6);
+		Main.controllerGrid.add(timeStepTitle, 1, 7);
 		
 		
 		// 2.2.0: Add the time step buttons
@@ -205,7 +221,7 @@ public class CritterController {
 		oneTimeBtn.setText("Do 1 Time Step");
 		oneTimeBtn.setTextFill(Color.RED);
 		oneTimeBtn.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
-		Main.controllerGrid.add(oneTimeBtn, 1, 7);
+		Main.controllerGrid.add(oneTimeBtn, 1, 8);
 		
 		// 2.2.1.B: Add button handler
 		oneTimeBtn.setOnAction((ActionEvent e)->{
@@ -226,7 +242,7 @@ public class CritterController {
 		hunTimeBtn.setText("Do 100 Time Steps");
 		hunTimeBtn.setTextFill(Color.RED);
 		hunTimeBtn.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
-		Main.controllerGrid.add(hunTimeBtn, 1, 8);
+		Main.controllerGrid.add(hunTimeBtn, 1, 9);
 		
 		// 2.2.2.B: Add button handler
 		hunTimeBtn.setOnAction((ActionEvent e)->{
@@ -249,7 +265,7 @@ public class CritterController {
 		thouTimeBtn.setText("Do 1000 Time Steps");
 		thouTimeBtn.setTextFill(Color.RED);
 		thouTimeBtn.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
-		Main.controllerGrid.add(thouTimeBtn, 1, 9);
+		Main.controllerGrid.add(thouTimeBtn, 1, 10);
 		
 		// 2.2.3.B: Add button handler
 		
@@ -272,18 +288,18 @@ public class CritterController {
 		Label orNumberMessage = new Label("Or enter # of steps below:");
 		orNumberMessage.setTextFill(Color.BLACK);
 		orNumberMessage.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
-		Main.controllerGrid.add(orNumberMessage, 2, 7);
+		Main.controllerGrid.add(orNumberMessage, 2, 8);
 		
 		// 2.3.2: Add the number field
 		TextField orNumberField = new TextField("");
-		Main.controllerGrid.add(orNumberField, 2, 8);
+		Main.controllerGrid.add(orNumberField, 2, 9);
 				
 		// 2.3.3: Create and add button
 		Button orNumberbtn = new Button();
 		orNumberbtn.setText("Do Custon # of Steps!");
 		orNumberbtn.setTextFill(Color.DARKGOLDENROD);
 		orNumberbtn.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
-		Main.controllerGrid.add(orNumberbtn, 2, 9);
+		Main.controllerGrid.add(orNumberbtn, 2, 10);
 		
 		// 2.3.4: Add button handler
 		
