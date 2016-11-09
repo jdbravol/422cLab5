@@ -118,7 +118,7 @@ public abstract class Critter {
 	}
 
 	/**
-	 * returns a randome number from 0 to (max - 1)
+	 * returns a random number from 0 to (max - 1)
 	 * @param max
 	 * @return random int from 0 to (max - 1)
 	 */
