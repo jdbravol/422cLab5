@@ -58,6 +58,10 @@ public abstract class Critter {
 	// this matrix keeps track of critters at each specific location
 	public static Locations[][] locationMatrix = locationMatrixInit();
 
+	// this matrix keeps track of critters prior to timestep
+
+	public static Locations[][] oldMatrix;
+
     //inFight is a flag that will detect if a critter is in a fight or not
     private static boolean inFight;
     private boolean fightMoved;
@@ -70,7 +74,71 @@ public abstract class Critter {
 	private static java.util.Random rand = new java.util.Random();
 	
 	// ******************* IMPLEMENT THISS!!!!!! ********************************
-	protected String look(int direction, boolean steps) {return "";}
+	protected String look(int direction, boolean steps) {
+
+		Locations[][] lookingMatrix;
+		int step;
+		int newX = this.x_coord;
+		int newY = this.y_coord;
+		this.energy -= Params.look_energy_cost;
+
+		if (inFight){
+			lookingMatrix = locationMatrix;
+		}
+		else{
+			lookingMatrix = oldMatrix;
+		}
+
+		if (steps){
+			step = 1;
+		}
+		else{
+			step = 2;
+		}
+		switch (direction) {
+			case 0:
+				newX +=  step;
+				newX %= Params.world_width;
+			case 1:
+				newX +=  step;
+				newX %= Params.world_width;
+				newY += step;
+				newY %= Params.world_height;
+			case 2:
+				newY += this.y_coord;
+				newY %= Params.world_height;
+
+			case 3:
+				newX -= step;
+				newX %= Params.world_width;
+				newY += step;
+				newY %= Params.world_height;
+			case 4:
+				newX -= step;
+				newX %= Params.world_width;
+			case 5:
+				newX -= step;
+				newX %= Params.world_width;
+				newY -= step;
+				newY %= Params.world_height;
+			case 6:
+				newY -= step;
+				newY %= Params.world_height;
+			case 7:
+				newX += step;
+				newX %= Params.world_width;
+				newY -= step;
+				newY %= Params.world_height;
+		}
+		if (lookingMatrix[newY][newX].inHere.isEmpty()){
+			return null;
+		}
+		else{
+			Iterator<Critter> cellIterator = lookingMatrix[this.y_coord][this.x_coord+step].inHere.iterator();
+			return 	cellIterator.next().toString();
+		}
+
+	}
 	
 	
 	
@@ -605,6 +673,9 @@ public abstract class Critter {
 	 * goes through the seven necessary steps of the World Time Step
 	 */
 	public static void worldTimeStep() {
+		// 0: initializes matrix with old locations
+		oldLocationInit();
+
 		// 1: do everyone's time steps
         for(Critter critter: population){
             critter.doTimeStep();
@@ -667,6 +738,21 @@ public abstract class Critter {
 			locationMatrix[newAlgae.y_coord][newAlgae.x_coord].inHere.add(newAlgae);
 		}
 
+	}
+
+	/**
+	 * @name oldLocationMatrix
+	 * @description	initializes matrix with previous positions prior to time step
+	 */
+	private static void oldLocationInit(){
+		Locations[][] oldLocations = new Locations[Params.world_height][Params.world_width];
+
+		for(int row = 0; row < Params.world_height; row++){
+			for(int col = 0; col < Params.world_width; col++){
+				oldLocations[row][col] = new Locations();
+				oldLocations[row][col].inHere = (HashSet<Critter>) locationMatrix[row][col].inHere.clone();
+			}
+		}
 	}
 
 	/**
