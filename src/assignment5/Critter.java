@@ -70,7 +70,20 @@ public abstract class Critter {
 	private static java.util.Random rand = new java.util.Random();
 	
 	// ******************* IMPLEMENT THISS!!!!!! ********************************
-	protected String look(int direction, boolean steps) {return "";}
+	protected String look(int direction, boolean steps) {
+		Locations[][] oldLocations = new Locations[Params.world_height][Params.world_width];
+
+		for(int row = 0; row < Params.world_height; row++){
+			for(int col = 0; col < Params.world_width; col++){
+				oldLocations[row][col].inHere =  (HashSet<Critter>) locationMatrix[row][col].inHere.clone();
+			}
+		}
+		
+		return "";
+
+
+
+	}
 	
 	
 	
