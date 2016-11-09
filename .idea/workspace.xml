@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="423b55ef-7022-44e7-9b1d-5f85d868248d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/422cLab5.iml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.classpath" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.project" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/422cLab5/assignment5/Critter$Locations.class" afterPath="$PROJECT_DIR$/out/production/422cLab5/assignment5/Critter$Locations.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/422cLab5/assignment5/Critter$TestCritter.class" afterPath="$PROJECT_DIR$/out/production/422cLab5/assignment5/Critter$TestCritter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/422cLab5/assignment5/Critter.class" afterPath="$PROJECT_DIR$/out/production/422cLab5/assignment5/Critter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assignment5/Critter.java" afterPath="$PROJECT_DIR$/src/assignment5/Critter.java" />
     </list>
     <ignored path="422cLab5.iws" />
@@ -27,9 +32,33 @@
       <file leaf-file-name="Critter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/assignment5/Critter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="80" column="8" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
-              <folding />
+            <state relative-caret-position="-1515">
+              <caret line="131" column="9" selection-start-line="131" selection-start-column="9" selection-end-line="131" selection-end-column="9" />
+              <folding>
+                <element signature="e#3983#3984#0" expanded="true" />
+                <element signature="e#4024#4025#0" expanded="true" />
+                <marker date="1478659020000" expanded="false" signature="1283:1289" ph=" { " />
+                <marker date="1478659020000" expanded="false" signature="1327:1331" ph=" }" />
+                <marker date="1478659020000" expanded="false" signature="1631:1640" ph="&lt;~&gt;" />
+                <marker date="1478659020000" expanded="false" signature="1706:1715" ph="&lt;~&gt;" />
+                <marker date="1478659020000" expanded="false" signature="4694:4699" ph=" { " />
+                <marker date="1478659020000" expanded="false" signature="4724:4727" ph=" }" />
+                <marker date="1478659020000" expanded="false" signature="4861:4866" ph=" { " />
+                <marker date="1478659020000" expanded="false" signature="4904:4907" ph=" }" />
+                <marker date="1478659020000" expanded="false" signature="18032:18041" ph="&lt;~&gt;" />
+                <marker date="1478659020000" expanded="false" signature="18900:18917" ph="&lt;~&gt;" />
+                <marker date="1478659020000" expanded="false" signature="20092:20098" ph=" { " />
+                <marker date="1478659020000" expanded="false" signature="20130:20134" ph=" }" />
+                <marker date="1478659020000" expanded="false" signature="20677:20683" ph=" { " />
+                <marker date="1478659020000" expanded="false" signature="20704:20708" ph=" }" />
+                <marker date="1478659020000" expanded="false" signature="20740:20786" ph=" { " />
+                <marker date="1478659020000" expanded="false" signature="20807:20811" ph=" }" />
+                <marker date="1478659020000" expanded="false" signature="21098:21104" ph=" { " />
+                <marker date="1478659020000" expanded="false" signature="21122:21126" ph=" }" />
+                <marker date="1478659020000" expanded="false" signature="21510:21516" ph=" { " />
+                <marker date="1478659020000" expanded="false" signature="21530:21534" ph=" }" />
+                <marker date="1478659020000" expanded="false" signature="24841:24850" ph="&lt;~&gt;" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -606,7 +635,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#478#0" expanded="true" />
+            <element signature="e#0#478#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -728,9 +757,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment5/Critter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="80" column="8" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
-          <folding />
+        <state relative-caret-position="-1515">
+          <caret line="131" column="9" selection-start-line="131" selection-start-column="9" selection-end-line="131" selection-end-column="9" />
+          <folding>
+            <element signature="e#3983#3984#0" expanded="true" />
+            <element signature="e#4024#4025#0" expanded="true" />
+            <marker date="1478659020000" expanded="false" signature="1283:1289" ph=" { " />
+            <marker date="1478659020000" expanded="false" signature="1327:1331" ph=" }" />
+            <marker date="1478659020000" expanded="false" signature="1631:1640" ph="&lt;~&gt;" />
+            <marker date="1478659020000" expanded="false" signature="1706:1715" ph="&lt;~&gt;" />
+            <marker date="1478659020000" expanded="false" signature="4694:4699" ph=" { " />
+            <marker date="1478659020000" expanded="false" signature="4724:4727" ph=" }" />
+            <marker date="1478659020000" expanded="false" signature="4861:4866" ph=" { " />
+            <marker date="1478659020000" expanded="false" signature="4904:4907" ph=" }" />
+            <marker date="1478659020000" expanded="false" signature="18032:18041" ph="&lt;~&gt;" />
+            <marker date="1478659020000" expanded="false" signature="18900:18917" ph="&lt;~&gt;" />
+            <marker date="1478659020000" expanded="false" signature="20092:20098" ph=" { " />
+            <marker date="1478659020000" expanded="false" signature="20130:20134" ph=" }" />
+            <marker date="1478659020000" expanded="false" signature="20677:20683" ph=" { " />
+            <marker date="1478659020000" expanded="false" signature="20704:20708" ph=" }" />
+            <marker date="1478659020000" expanded="false" signature="20740:20786" ph=" { " />
+            <marker date="1478659020000" expanded="false" signature="20807:20811" ph=" }" />
+            <marker date="1478659020000" expanded="false" signature="21098:21104" ph=" { " />
+            <marker date="1478659020000" expanded="false" signature="21122:21126" ph=" }" />
+            <marker date="1478659020000" expanded="false" signature="21510:21516" ph=" { " />
+            <marker date="1478659020000" expanded="false" signature="21530:21534" ph=" }" />
+            <marker date="1478659020000" expanded="false" signature="24841:24850" ph="&lt;~&gt;" />
+          </folding>
         </state>
       </provider>
     </entry>
