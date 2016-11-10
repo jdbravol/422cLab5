@@ -80,11 +80,11 @@ public class CritterShapes {
 		star.getPoints().addAll(new Double[]{
 			0.0, ((double) Main.cellSize * 0.3),									// 1
 		    ((double) Main.cellSize * 0.35), ((double) Main.cellSize * 0.3),		// 2
-		    ((double) Main.cellSize * 0.5), 0.0,									// 3		
+		    ((double) Main.cellSize * 0.5), 3.0,									// 3		
 			((double) Main.cellSize * 0.65), ((double) Main.cellSize * 0.3),		// 4		
-			(double) Main.cellSize, ((double) Main.cellSize * 0.3), 				// 5		
+			((double) Main.cellSize * 0.9), ((double) Main.cellSize * 0.3), 				// 5		
 			((double) Main.cellSize * 0.75), ((double) Main.cellSize * 0.5),		// 6		
-			(double) Main.cellSize, (double) Main.cellSize,							// 7		
+			((double) Main.cellSize * 0.9), (double) Main.cellSize,							// 7		
 			((double) Main.cellSize * 0.5), ((double) Main.cellSize * 0.65),		// 8					
 			0.0, (double) Main.cellSize,											// 9		
 			((double) Main.cellSize * 0.25), ((double) Main.cellSize * 0.5)});		// 10

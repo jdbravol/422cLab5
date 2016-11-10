@@ -75,7 +75,8 @@ public abstract class Critter {
 	
 	// ******************* IMPLEMENT THISS!!!!!! ********************************
 	protected String look(int direction, boolean steps) {
-
+		
+		/*
 		Locations[][] lookingMatrix;
 		int step;
 		int newX = this.x_coord;
@@ -137,7 +138,8 @@ public abstract class Critter {
 			Iterator<Critter> cellIterator = lookingMatrix[this.y_coord][this.x_coord+step].inHere.iterator();
 			return 	cellIterator.next().toString();
 		}
-
+		*/
+		return "";
 	}
 	
 	
@@ -538,7 +540,12 @@ public abstract class Critter {
             // add critter to the visual world
             Rectangle bckSqr = new Rectangle(Main.cellSize, Main.cellSize, Color.WHITE);
             bckSqr.setStroke(Color.WHITE);
-            bckSqr.setStrokeWidth(6);
+			if((Params.world_height <= 65) || (Params.world_height <= 65)){
+				bckSqr.setStrokeWidth(6);
+			}
+			else{
+				bckSqr.setStrokeWidth(6);
+			}
             Main.worldGrid.add(bckSqr, newCritter.x_coord, newCritter.y_coord);
             
             Shape newCritterShape = WorldView.getCritterShape(newCritter);
@@ -564,14 +571,18 @@ public abstract class Critter {
 		List<Critter> result = new java.util.ArrayList<Critter>();
         try{
         	// dynamically create class:
-            for (Critter maybeInstance: population){
-            Class givenCritter = Class.forName(myPackage + "." + critter_class_name);
-                if (givenCritter.isInstance(maybeInstance)) {
-                    result.add(0, maybeInstance);
-                 }
-
-            }
-            
+        	for(int row = 0; row < Params.world_height; row++){
+	        	for(int col = 0; col < Params.world_width; col++){
+	        		Locations thisCritterCell = locationMatrix[row][col];
+		            for (Critter maybeInstance: thisCritterCell.inHere){
+		            Class givenCritter = Class.forName("assignment5." + critter_class_name);
+		                if (givenCritter.isInstance(maybeInstance)) {
+		                    result.add(0, maybeInstance);
+		                 }
+		
+		            }
+	        	}
+        	}
         }
         // catch invalid critter errors
         catch(ClassNotFoundException ex) {
@@ -891,7 +902,7 @@ public abstract class Critter {
 		
 		Main.secondStage.setTitle("Critter World");
 		Main.worldGrid = WorldView.drawInitialWorld();
-		Scene worldScene = new Scene(Main.worldGrid, 690, 690);
+		Scene worldScene = new Scene(Main.worldGrid, 800, 800);
 		Main.secondStage.setScene(worldScene);
 		Main.secondStage.show();
 	}

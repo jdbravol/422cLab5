@@ -16,7 +16,11 @@
 package assignment5;
 
 import java.io.File;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.sun.glass.events.MouseEvent;
 
@@ -35,9 +39,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import sun.misc.Cleaner;
 
 public class CritterController {
 	static String selectedMakeCritter = "";
+	static String selectedRunStatsCritter = "";
+	static TextArea runStatsTextPaneConsole = new TextArea();
 	
 	/**
 	 * This method gets all .class file names in the current package
@@ -95,6 +102,14 @@ public class CritterController {
 	 * @return none
 	 */
 	public static void initUI(){
+		// -2 : Set UI attributes
+		
+		Main.controllerGrid.setAlignment(Pos.CENTER);
+		Main.controllerGrid.setHgap(10);
+		Main.controllerGrid.setVgap(10);
+		Main.controllerGrid.setPadding(new Insets(25,25,25,25));	
+		Main.controllerGrid.setGridLinesVisible(false);
+		
 		// -1.0: Set seed UI
 		
 		// -1.1: Set title
@@ -103,23 +118,39 @@ public class CritterController {
 		setSeedTitle.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 14));	
 		Main.controllerGrid.add(setSeedTitle, 1, 0);
 		
-		// -1.2: Add prompt
-		Label setSeedMessage = new Label("Enter new seed #:");
-		setSeedMessage.setTextFill(Color.BLACK);
-		setSeedMessage.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
-		setSeedMessage.setPrefHeight(30);
-		Main.controllerGrid.add(setSeedMessage, 1, 1);
+		// -1.2: Add num field and label field
+		TextField seedNumber = new TextField("");
+		Main.controllerGrid.add(seedNumber, 1, 1);
 		
+		Label seedResponse = new Label("Seed = Default Random");
+		seedResponse.setTextFill(Color.BLACK);
+		seedResponse.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
+		seedResponse.setPrefWidth(230);
+		Main.controllerGrid.add(seedResponse, 2, 0);
 		
-		// 0.0 : Set UI attributes
+		// -1.3: Add button
 		
-		Main.controllerGrid.setAlignment(Pos.CENTER);
-		Main.controllerGrid.setHgap(10);
-		Main.controllerGrid.setVgap(10);
-		Main.controllerGrid.setPadding(new Insets(25,25,25,25));	
+		// -1.3.1: Create and add button
+		Button setSeedButton = new Button();
+		setSeedButton.setText("Set Seed!");
+		setSeedButton.setTextFill(Color.RED);
+		setSeedButton.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
+		Main.controllerGrid.add(setSeedButton, 2, 1);
 		
-		// 0.1: make lines visible
-		Main.controllerGrid.setGridLinesVisible(false);				
+		// -1.3.2: Add button handler
+		
+		setSeedButton.setOnAction((ActionEvent e)->{
+			// first see if valid number of critter entered
+			int seedNum = 0;
+			try{
+				seedNum = Integer.parseInt(seedNumber.getText());
+				Critter.setSeed(seedNum);
+				seedResponse.setText("New Seed = " + seedNum);
+			}
+			catch(Exception ex){
+				return;
+			}
+		});
 		
 		
 		// 1.0: ADD THE MAKE CRITTER INTERFACE
@@ -178,7 +209,7 @@ public class CritterController {
 			// if critter selected and one or more critter to create selected
 			if((selectedMakeCritter.length() != 0) && (critterNumCreate != 0)){
 				WorldView.createNumCritters(selectedMakeCritter, critterNumCreate);
-				// PLACE RUNSTATS HERE!
+				CritterController.doRunStats();
 				critterResponse.setText(critterNumCreate + " " + selectedMakeCritter + " Created!");
 			}
 		});
@@ -231,7 +262,7 @@ public class CritterController {
 			// update the world view
 			WorldView.updateWorldView();
 			
-			// PlACE RUNSTATS HERE!
+			CritterController.doRunStats();
 		});
 		
 		
@@ -254,7 +285,7 @@ public class CritterController {
 			// update the world view
 			WorldView.updateWorldView();
 			
-			// PlACE RUNSTATS HERE!
+			CritterController.doRunStats();
 		});
 		
 		
@@ -278,7 +309,7 @@ public class CritterController {
 			// update the world view
 			WorldView.updateWorldView();
 			
-			// PlACE RUNSTATS HERE!
+			CritterController.doRunStats();
 		});
 		
 		
@@ -323,19 +354,63 @@ public class CritterController {
 				// update the world view
 				WorldView.updateWorldView();
 				
-				// PlACE RUNSTATS HERE!
+				CritterController.doRunStats();
 			}
 		});
 		
+		// 3.0: The Run Stats interface
 		
+		// 3.1.0: Add the runStats title
 		
+		Text runStatsTitle = new Text("Select RunStats Critter");
+		runStatsTitle.setFill(Color.DARKBLUE);
+		runStatsTitle.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 14));	
+		Main.controllerGrid.add(runStatsTitle, 1, 11);
 
+		// 3.2.0: Add the TextPane For Displaying Stats
 		
+		// 3.2.1: Create a TextArea and set it as the default system console
+		PrintStream streamRunStats = new PrintStream(new TextPaneConsole(runStatsTextPaneConsole));
+		System.setOut(streamRunStats);
 		
+		// 3.2.2: Add the text area to the UI
+		runStatsTextPaneConsole.setMaxHeight(75);
+		Main.controllerGrid.add(runStatsTextPaneConsole, 2, 12);
 		
+		// 3.3.0: Add the list to the system
 		
+		// 1.5: Add the list of critters
 		
+		// 1.5.1: Create the list
+		ObservableList<String> presentRunStatsCritters = FXCollections.observableArrayList(Main.critterNames);
+		ListView<String> critterRunStatsNames = new ListView<String>(presentRunStatsCritters);
+		critterRunStatsNames.setPrefSize(140, 100);
+		Main.controllerGrid.add(critterRunStatsNames, 1, 12, 1, 3);								
 		
+		// 1.5.2: Add controllers for the list, mark which critter is being selected for creation
+		MultipleSelectionModel<String> critterStatsSelModel = critterRunStatsNames.getSelectionModel();
+		critterStatsSelModel.selectedItemProperty().addListener(new ChangeListener<String>(){
+			public void changed(ObservableValue<? extends String> changed, String oldVal, String newVal){
+				selectedRunStatsCritter = newVal;
+				CritterController.doRunStats();
+			}	
+		});
 		
 	}	
+	
+	public static void doRunStats(){
+		runStatsTextPaneConsole.clear();
+		System.out.println(selectedRunStatsCritter + " Stats:");
+		try{
+			java.util.List<Critter> critterInstancesStats;
+			Class<?> critterClass = Class.forName("assignment5." + selectedRunStatsCritter);
+			critterInstancesStats = Critter.getInstances(selectedRunStatsCritter);
+	
+			Method method = critterClass.getMethod("runStats", List.class);
+			method.invoke(critterClass, critterInstancesStats);
+		}
+		catch(Exception e){
+			;
+		}
+	}
 }

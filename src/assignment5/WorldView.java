@@ -44,13 +44,31 @@ public class WorldView {
 		newWorldGrid.setVgap(3);
 		newWorldGrid.setPadding(new Insets(25,25,25,25));		// set qualities
 		
+		if((Params.world_height <= 65) || (Params.world_height <= 65)){
+			newWorldGrid.setAlignment(Pos.CENTER);
+			newWorldGrid.setHgap(3);
+			newWorldGrid.setVgap(3);
+			newWorldGrid.setPadding(new Insets(25,25,25,25));		// set qualities
+		}
+		else{
+			newWorldGrid.setAlignment(Pos.CENTER);
+			newWorldGrid.setHgap(0);
+			newWorldGrid.setVgap(0);
+			newWorldGrid.setPadding(new Insets(0,0,0,0));		// set qualities
+		}
+		
 		newWorldGrid.setGridLinesVisible(false);				// make lines visible
 		
 		for(int i = 0; i < Params.world_width; i++){
 			for(int j = 0; j < Params.world_width; j++){	
 				Rectangle blankSqr = new Rectangle(Main.cellSize, Main.cellSize, Color.WHITE);
 				blankSqr.setStroke(Color.WHITE);
-				blankSqr.setStrokeWidth(6);
+				if((Params.world_height <= 65) || (Params.world_height <= 65)){
+					blankSqr.setStrokeWidth(6);
+				}
+				else{
+					blankSqr.setStrokeWidth(6);
+				}
 				newWorldGrid.add(blankSqr, i, j);
 			}
 		}														// add dummy circle to show something
@@ -126,7 +144,7 @@ public class WorldView {
        
 		// update the global world
 		Main.worldGrid = updatedWorld;
-		Scene worldScene = new Scene(Main.worldGrid, 690, 690);
+		Scene worldScene = new Scene(Main.worldGrid, 800, 800);
 		Main.secondStage.setScene(worldScene);
 		Main.secondStage.show();
 	}

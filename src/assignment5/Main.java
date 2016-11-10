@@ -18,17 +18,29 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	static GridPane controllerGrid = new GridPane();
 	static GridPane worldGrid = new GridPane();
 	static double bigSide = (double)Math.max(Params.world_height, Params.world_width);
-	static double cellSize = (double) ((680.0 - (bigSide * 10)) / bigSide);
+
+	static double cellSize;
+
 	static ArrayList<String> critterNames; 
 	static Stage firstStage = new Stage();
 	static Stage secondStage = new Stage();
-
+	
+	static{
+		if((Params.world_height <= 65) || (Params.world_height <= 65)){
+			cellSize = (double) ((680.0 - (bigSide * 10)) / bigSide);
+		}
+		else{
+			cellSize = (double) ((0.8 - (bigSide * 0)) / bigSide);
+		}
+	}
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -37,12 +49,16 @@ public class Main extends Application {
 			// deal with the Controller (primary stage)
 			firstStage.setTitle("Critter World Controller");
 			CritterController.initUI();
-			Scene controlScene = new Scene(controllerGrid, 500, 600);
+			Scene controlScene = new Scene(controllerGrid, 500, 700);
 			firstStage.setScene(controlScene);
 			firstStage.show();
 			
+			
 			// deal with the Critter World (second Stage)
 			Critter.displayWorld();
+			
+			//Shape testShape = CritterShapes.getStar(Color.ORANGE, Color.BLUE);
+			//Main.worldGrid.add(testShape, 5, 6);
 			
 		} catch(Exception e) {
 			e.printStackTrace();		
