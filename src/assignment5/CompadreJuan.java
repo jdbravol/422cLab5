@@ -17,20 +17,7 @@ public class CompadreJuan extends Critter {
     }
     @Override
     public void doTimeStep() {
-        if (getEnergy() > Params.run_energy_cost){
-            run(dir);
-        }
-        else if (getEnergy() > Params.walk_energy_cost){
-            walk(dir);
-        }
-        if (getEnergy() < 20){
-            for (int i = 0; i < 8; i++) {
-                if(look(i,true).equals("@")){
-                    run(i);
-                }
-            }
-        }
-        if (getEnergy() > 200){
+        if (getEnergy() > 50){
             CompadreJuan child = new CompadreJuan();
             reproduce(child, Critter.getRandomInt(8));
         }
