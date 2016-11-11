@@ -21,9 +21,12 @@ import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 import com.sun.glass.events.MouseEvent;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -35,6 +38,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -44,7 +48,13 @@ import sun.misc.Cleaner;
 public class CritterController {
 	static String selectedMakeCritter = "";
 	static String selectedRunStatsCritter = "";
+	static int animationFPS = 0;
 	static TextArea runStatsTextPaneConsole = new TextArea();
+	static GridPane animControlGrid;
+	static Text animationTitle = new Text("Animating at " + animationFPS + " Step/s");
+	static Scene controlScene;
+	static Scene animControlScene;
+	static Timer animationTimer;
 	
 	/**
 	 * This method gets all .class file names in the current package
@@ -379,15 +389,15 @@ public class CritterController {
 		
 		// 3.3.0: Add the list to the system
 		
-		// 1.5: Add the list of critters
+		// 3.3.1: Add the list of critters
 		
-		// 1.5.1: Create the list
+		// 3.3.1.1: Create the list
 		ObservableList<String> presentRunStatsCritters = FXCollections.observableArrayList(Main.critterNames);
 		ListView<String> critterRunStatsNames = new ListView<String>(presentRunStatsCritters);
 		critterRunStatsNames.setPrefSize(140, 100);
 		Main.controllerGrid.add(critterRunStatsNames, 1, 12, 1, 3);								
 		
-		// 1.5.2: Add controllers for the list, mark which critter is being selected for creation
+		// 3.3.1.2: Add controllers for the list, mark which critter is being selected for creation
 		MultipleSelectionModel<String> critterStatsSelModel = critterRunStatsNames.getSelectionModel();
 		critterStatsSelModel.selectedItemProperty().addListener(new ChangeListener<String>(){
 			public void changed(ObservableValue<? extends String> changed, String oldVal, String newVal){
@@ -396,6 +406,76 @@ public class CritterController {
 			}	
 		});
 		
+		
+		// 4.0: The animations interface
+
+		// 4.1.0: Add animations title
+		
+		Text animationTitle = new Text("Select Steps/s for Animation");
+		animationTitle.setFill(Color.DARKBLUE);
+		animationTitle.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 14));	
+		Main.controllerGrid.add(animationTitle, 1, 15);
+
+		// 4.2.0: Add the Animation button:
+		
+		// Create and add the button
+		Button animationbtn = new Button();
+		animationbtn.setText("Animate!");
+		animationbtn.setTextFill(Color.DARKGOLDENROD);
+		animationbtn.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
+		Main.controllerGrid.add(animationbtn, 2, 16);
+		
+		CritterController.animationControl();				// establish all animation attributes
+		animControlScene = new Scene(animControlGrid, 500, 800);
+		
+		// Add button handler
+		animationbtn.setOnAction((ActionEvent e)->{
+			// first see if valid number of steps entered
+			if(animationFPS > 0){
+				CritterController.animationTitle.setText("Animating at " + animationFPS + " Step/s");
+				Main.firstStage.setScene(animControlScene);
+				Main.firstStage.show();
+				
+				// BEGIN ANIMATION
+				animationTimer = new Timer();
+				animationTimer.schedule(new AnimThread(), 0, 1000);
+			}
+		});
+		
+		
+		// 4.3.0: Add the list to the system
+		
+		// 4.3.1: Add the list of critters
+		
+		// 4.3.1.1: Create the list
+		String[] fpsOptionsArr = {"2", "5", "10", "20","50", "100"};
+		ObservableList<String> fpdOptions = FXCollections.observableArrayList(fpsOptionsArr);
+		ListView<String> fpsOptionsDisp = new ListView<String>(fpdOptions);
+		fpsOptionsDisp.setPrefSize(140, 100);
+		Main.controllerGrid.add(fpsOptionsDisp, 1, 16, 1, 3);								
+		
+		// 4.3.1.2: Add controllers for the list, mark which critter is being selected for creation
+		MultipleSelectionModel<String> fpsSelModel = fpsOptionsDisp.getSelectionModel();
+		fpsSelModel.selectedItemProperty().addListener(new ChangeListener<String>(){
+			public void changed(ObservableValue<? extends String> changed, String oldVal, String newVal){
+				animationFPS = Integer.parseInt(newVal);
+			}	
+		});
+		
+		// 5.0: Add quit button
+		
+		// Create and add the button
+		Button quitbtn = new Button();
+		quitbtn.setText("QUIT");
+		quitbtn.setTextFill(Color.DARKGOLDENROD);
+		quitbtn.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
+		Main.controllerGrid.add(quitbtn, 1, 21);
+		
+
+		// Add button handler
+		quitbtn.setOnAction((ActionEvent e)->{
+			Platform.exit();
+		});
 	}	
 	
 	public static void doRunStats(){
@@ -412,5 +492,53 @@ public class CritterController {
 		catch(Exception e){
 			;
 		}
+	}
+	
+	public static void displayController(){
+		Main.firstStage.setTitle("Critter World Controller");
+		CritterController.initUI();
+		controlScene = new Scene(Main.controllerGrid, 500, 800);
+		Main.firstStage.setScene(controlScene);
+		Main.firstStage.show();
+	}
+	
+	public static void animationControl(){
+		// change the stage to animation
+		Main.firstStage.setTitle("Critter Animation Controller");
+		animControlGrid = new GridPane();
+		animControlGrid.setAlignment(Pos.CENTER);
+		animControlGrid.setHgap(10);
+		animControlGrid.setVgap(10);
+		animControlGrid.setPadding(new Insets(25,25,25,25));	
+		animControlGrid.setGridLinesVisible(false);
+		
+		// add title and button
+		animationTitle.setFill(Color.DARKBLUE);
+		animationTitle.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 14));	
+		animControlGrid.add(animationTitle, 1, 1);
+		
+		// Create and add the button
+		Button animationbtn = new Button();
+		animationbtn.setText("STOP ANIMATION");
+		animationbtn.setTextFill(Color.DARKGOLDENROD);
+		animationbtn.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 14));
+		animControlGrid.add(animationbtn, 1, 2);
+		
+		// Add button handler
+		animationbtn.setOnAction((ActionEvent e)->{
+			// STOP ANIMATION!
+			animationTimer.cancel();
+			
+			Main.firstStage.setScene(controlScene);
+			Main.firstStage.show();	
+		});
+		
+	}
+	
+
+	
+	
+	public static void generateAnim(){
+		;
 	}
 }

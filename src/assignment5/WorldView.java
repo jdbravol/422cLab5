@@ -148,5 +148,7 @@ public class WorldView {
 		Main.secondStage.setScene(worldScene);
 		Main.secondStage.show();
 	}
+	
+
 }
 

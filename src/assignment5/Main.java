@@ -47,11 +47,7 @@ public class Main extends Application {
 			critterNames = CritterController.getCrittterNames();			// get all critter names
 		
 			// deal with the Controller (primary stage)
-			firstStage.setTitle("Critter World Controller");
-			CritterController.initUI();
-			Scene controlScene = new Scene(controllerGrid, 500, 700);
-			firstStage.setScene(controlScene);
-			firstStage.show();
+			CritterController.displayController();
 			
 			
 			// deal with the Critter World (second Stage)
