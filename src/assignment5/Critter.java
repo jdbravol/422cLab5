@@ -60,7 +60,7 @@ public abstract class Critter {
 
 	// this matrix keeps track of critters prior to timestep
 
-	public static Locations[][] oldMatrix;
+	public static String[][] oldMatrix;
 
     //inFight is a flag that will detect if a critter is in a fight or not
     private static boolean inFight;
@@ -73,77 +73,93 @@ public abstract class Critter {
 	
 	private static java.util.Random rand = new java.util.Random();
 	
-	// ******************* IMPLEMENT THISS!!!!!! ********************************
 	protected String look(int direction, boolean steps) {
-		
-		/*
-		Locations[][] lookingMatrix;
+        boolean fight = inFight;
 		int step;
 		int newX = this.x_coord;
 		int newY = this.y_coord;
 		this.energy -= Params.look_energy_cost;
-
-		if (inFight){
-			lookingMatrix = locationMatrix;
-		}
-		else{
-			lookingMatrix = oldMatrix;
-		}
-
 		if (steps){
-			step = 1;
+			step = 2;
 		}
 		else{
-			step = 2;
+			step = 1;
 		}
 		switch (direction) {
 			case 0:
 				newX +=  step;
 				newX %= Params.world_width;
+                break;
 			case 1:
 				newX +=  step;
 				newX %= Params.world_width;
-				newY += step;
-				newY %= Params.world_height;
+				newY -= step;
+                if(newY < 0){
+                    newY= Params.world_height - 1;
+                }
+                break;
 			case 2:
-				newY += this.y_coord;
-				newY %= Params.world_height;
+				newY -= this.y_coord;
+                if(newY < 0){
+                    newY = Params.world_height - 1;
+                }
+                break;
 
 			case 3:
-				newX -= step;
-				newX %= Params.world_width;
-				newY += step;
-				newY %= Params.world_height;
+                newX -= step;
+                if(newX < 0){
+                    newX = Params.world_width - 1;
+                }
+                newY -= step;
+                if(newY < 0){
+                    newY = Params.world_height - 1;
+                }
+                break;
 			case 4:
-				newX -= step;
-				newX %= Params.world_width;
+                newX -= step;
+                if(newX < 0){
+                    newX = Params.world_width - 1;
+                }
 			case 5:
 				newX -= step;
-				newX %= Params.world_width;
-				newY -= step;
+                if(newX < 0){
+                    newX = Params.world_width - 1;
+                }
+				newY += step;
 				newY %= Params.world_height;
+                break;
 			case 6:
-				newY -= step;
+				newY += step;
 				newY %= Params.world_height;
+                break;
 			case 7:
 				newX += step;
 				newX %= Params.world_width;
-				newY -= step;
+				newY += step;
 				newY %= Params.world_height;
+                break;
 		}
-		if (lookingMatrix[newY][newX].inHere.isEmpty()){
-			return null;
+		if (inFight){
+			return inFightLook(newX,newY);
 		}
 		else{
-			Iterator<Critter> cellIterator = lookingMatrix[this.y_coord][this.x_coord+step].inHere.iterator();
-			return 	cellIterator.next().toString();
+			return notFightLook(newX, newY);
 		}
-		*/
-		return "";
 	}
+
+	private String inFightLook(int newX, int newY){
+        if (locationMatrix[newY][newX].inHere.isEmpty()){
+            return null;
+        }
+        else {
+            Iterator<Critter> critterHere = locationMatrix[newY][newX].inHere.iterator();
+            return critterHere.next().toString();
+        }
+    }
 	
-	
-	
+	private String notFightLook(int newX, int newY){
+        return oldMatrix[newY][newX];
+    }
 	/**
 	 * @name Locations
 	 * @description this private class contains a HashSet holding
@@ -694,7 +710,9 @@ public abstract class Critter {
 
         // 2: resolve all encounters
         resolveEncounters();
-        
+        inFight = false;        // clear fighting
+
+
         // 3: update rest energy
         for(Critter critter: population){
             critter.energy -= Params.rest_energy_cost;
@@ -756,14 +774,19 @@ public abstract class Critter {
 	 * @description	initializes matrix with previous positions prior to time step
 	 */
 	private static void oldLocationInit(){
-		Locations[][] oldLocations = new Locations[Params.world_height][Params.world_width];
+		oldMatrix = new String[Params.world_height][Params.world_width];
 
 		for(int row = 0; row < Params.world_height; row++){
 			for(int col = 0; col < Params.world_width; col++){
-				oldLocations[row][col] = new Locations();
-				oldLocations[row][col].inHere = (HashSet<Critter>) locationMatrix[row][col].inHere.clone();
+				if (locationMatrix[row][col].inHere.isEmpty()){
+					oldMatrix[row][col] = null;
+				}
+				else{
+                    oldMatrix[row][col] = locationMatrix[row][col].inHere.toString();
+                }
 			}
 		}
+
 	}
 
 	/**
@@ -860,9 +883,7 @@ public abstract class Critter {
                 }
             }
         }
-
-        inFight = false;        // clear fighting
-	}
+    }
 	
 	
 
