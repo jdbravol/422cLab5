@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -82,10 +83,13 @@ public class CritterController {
 	 * This method gets the names of all  critters
 	 * @param none
 	 * @return an array list of strings
+	 * @throws ClassNotFoundException 
 	 */
-	public static ArrayList<String> getCrittterNames(){
+	public static ArrayList<String> getCrittterNames() throws ClassNotFoundException{
 		ArrayList<String> critterNames = new ArrayList<String>();
 		ArrayList<String> classNames = CritterController.getClassNames();
+		
+		Class<?> critterHolder = Class.forName("assignment5.Critter");
 		
 		// iterate through all classes and save the name of those that
 		// are instances of critter:
@@ -93,9 +97,8 @@ public class CritterController {
 			String currentClass = classNames.get(i);
 			try{
 				Class<?> checkClass = Class.forName("assignment5." + currentClass);
-				Critter checkIfCritter = (Critter) checkClass.newInstance();
 				
-				if(checkIfCritter instanceof Critter){
+				if(critterHolder.isAssignableFrom(checkClass) && !Modifier.isAbstract(checkClass.getModifiers())){
 					critterNames.add(classNames.get(i));
 				}
 			}
