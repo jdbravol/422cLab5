@@ -13,7 +13,7 @@ public class CompadreJuan extends Critter {
         for (int k = 0; k < 8; k += 1) {
             genes[k] = GENE_TOTAL / 8;
         }
-        dir = 0;
+        dir = getRandomInt(8);
     }
     @Override
     public void doTimeStep() {
@@ -32,21 +32,8 @@ public class CompadreJuan extends Critter {
         }
         if (getEnergy() > 200){
             CompadreJuan child = new CompadreJuan();
-            for (int k = 0; k < 8; k += 1) {
-                child.genes[k] = this.genes[k];
-            }
-            int g = Critter.getRandomInt(8);
-            while (child.genes[g] == 0) {
-                g = Critter.getRandomInt(8);
-            }
-            child.genes[g] -= 1;
-            g = Critter.getRandomInt(8);
-            child.genes[g] += 1;
             reproduce(child, Critter.getRandomInt(8));
         }
-
-        dir +=2;
-        dir %=8;
 
     }
 
